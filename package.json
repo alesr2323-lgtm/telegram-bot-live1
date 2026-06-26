@@ -10,7 +10,6 @@
     "dotenv": "^16.4.5",
     "@supabase/supabase-js": "^2.43.4",
     "express": "^4.19.2",
-    "cashfree-pg": "^4.0.8",
-    "telegraf-ratelimit": "^0.0.6"
+    "cashfree-pg": "^4.0.8"
   }
 }
