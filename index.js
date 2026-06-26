@@ -3,7 +3,6 @@ const { Telegraf, Markup } = require('telegraf');
 const { createClient } = require('@supabase/supabase-js');
 const express = require('express');
 const { Cashfree } = require('cashfree-pg');
-const rateLimit = require('telegraf-ratelimit');
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
@@ -21,14 +20,6 @@ const BASE_URL = process.env.BASE_URL;
 
 const FAKE_COMMENTS = ["Hi 🖐️", "Wow super live 😍", "Nice dear", "Beautiful 🧡", "Gifts sent 🎁"];
 const userTimers = new Map();
-
-// Rate Limit: 3 messages per 2 seconds
-const limitConfig = {
-  window: 2000,
-  limit: 3,
-  onLimitExceeded: (ctx) => ctx.reply('அதிக வேகமா click பண்றீங்க. கொஞ்சம் slow பண்ணுங்க bro 😅')
-};
-bot.use(rateLimit(limitConfig));
 
 // Get profiles from Supabase
 async function getProfiles(type) {
