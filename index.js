@@ -9,6 +9,53 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SER
 const app = express();
 app.use(express.json());
 
+// Add Profiles button click பண்ணா
+bot.action('add_profiles', async (ctx) => {
+  await ctx.answerCbQuery(); // மேல loading போகும்
+  
+  // பழைய msg-அ edit பண்ணி button போடலாம்
+  await ctx.editMessageText('பிரிவு என்ன select பண்ணுங்க bro 👇', {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          { text: '👨 Male', callback_data: 'gender_male' },
+          { text: '👩 Female', callback_data: 'gender_female' }
+        ],
+        [
+          { text: '⬅️ Back', callback_data: 'back_home' }
+        ]
+      ]
+    }
+  });
+});
+
+// Male button click பண்ணா
+bot.action('gender_male', async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.editMessageText('✅ Male select பண்ணிட்டீங்க. \n\nஇப்போ Name type பண்ணுங்க:');
+  // இங்க Supabase-ல gender = 'male' save பண்ற logic போடலாம்
+});
+
+// Female button click பண்ணா
+bot.action('gender_female', async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.editMessageText('✅ Female select பண்ணிட்டீங்க. \n\nஇப்போ Name type பண்ணுங்க:');
+  // இங்க Supabase-ல gender = 'female' save பண்ற logic
+});
+
+// Back button
+bot.action('back_home', async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.editMessageText('Main menu:', {
+    reply_markup: {
+      inline_keyboard: [
+        [{ text: 'Couples Live', callback_data: 'couples' }],
+        [{ text: 'Add Profiles', callback_data: 'add_profiles' }]
+      ]
+    }
+  });
+});
+
 // Cashfree Config
 Cashfree.XClientId = process.env.CASHFREE_APP_ID;
 Cashfree.XClientSecret = process.env.CASHFREE_SECRET_KEY;
